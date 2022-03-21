@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { SearchResultsType, autoCompleteSearchAction } from '../redux/slices/weatherSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import { CircularProgress } from '@mui/material';
+import { RootState } from '../redux/store';
 import TextField from '@mui/material/TextField';
-import axios from 'axios';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
 
 const SearchBar = () => {
+    const dispatch = useDispatch();
     const [city, setCity] = useState('');
-    const [options, setOptions] = useState<string[]>([]);
+    const [options, setOptions] = useState<SearchResultsType[]>([]);
     const [loading, setLoading] = useState(false);
+    const { searchResults } = useSelector((state: RootState) => state.weatherSlice);
 
     const deb = useCallback(
         debounce((e: any) => {
@@ -25,26 +29,26 @@ const SearchBar = () => {
     };
 
     useEffect(() => {
-        const searchRegions = async () => {
+        const searchCities = async () => {
             if (city?.trim() === '') return setOptions([]);
             setLoading(true);
-            const res = await axios.get(
-                `https://data.opendatasoft.com/api/records/1.0/search/?dataset=geonames-postal-code%40public&q=${city}&rows=50&facet=country_code`
-            );
-
-            setOptions([]);
-            for (const record of res.data.records) {
-                const { postal_code, place_name } = record.fields;
-                setOptions((prevOptions) => [...prevOptions, `${postal_code} (${place_name})`]);
-            }
+            await dispatch(autoCompleteSearchAction({ q: city }));
             setLoading(false);
         };
-        searchRegions();
-    }, [city]);
+        searchCities();
+    }, [city, dispatch]);
+
+    useEffect(() => {
+        setOptions(searchResults);
+    }, [searchResults]);
 
     const onSubmit = () => {
-        // if (options.includes(city)) return router.push(city);
-        return toast.error('mauvaise départements');
+        for (const obj of options) {
+            if (obj.LocalizedName !== city) continue;
+            const key = obj.Key;
+            return console.log(key);
+        }
+        return toast.error('Wrong city - please choose from one of the options ');
     };
 
     return (
@@ -55,9 +59,10 @@ const SearchBar = () => {
                 freeSolo
                 options={options}
                 loading={loading}
+                getOptionLabel={(option) => option.LocalizedName}
                 renderInput={(params) => (
                     <TextField
-                        onChange={onChange}
+                        key={'asd'}
                         onSelect={onChange}
                         name='city'
                         {...params}
@@ -67,8 +72,7 @@ const SearchBar = () => {
                             type: 'search',
                             endAdornment: (
                                 <React.Fragment>
-                                    {loading && <CircularProgress color='inherit' size={20} />}
-                                    {/* <button style={{ color: 'black' }}>button that will dispatch the action</button> */}
+                                    {loading && <CircularProgress className='circular-progress' size={20} />}
                                 </React.Fragment>
                             ),
                         }}

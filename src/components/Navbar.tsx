@@ -84,11 +84,7 @@ const Navbar = () => {
             >
                 {pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                        <Link
-                            to={page.route}
-                            style={{ color: 'black' }}
-                            className={location.pathname === page.route ? 'active' : 'null'}
-                        >
+                        <Link to={page.route} style={{ color: 'black' }}>
                             {page.name}
                         </Link>
                     </MenuItem>
