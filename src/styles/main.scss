@@ -1,0 +1,48 @@
+@import './app.scss';
+@import './pages/home.scss';
+@import './components/search-bar.scss';
+@import './components/navbar.scss';
+
+ul {
+    list-style-type: none;
+}
+li {
+    list-style-type: none;
+}
+
+html {
+    z-index: 1;
+    font-size: 16px;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button {
+    color: white;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+p {
+    max-width: 120ch;
+    letter-spacing: 1px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+}
+
+*:focus {
+    outline: none;
+}
