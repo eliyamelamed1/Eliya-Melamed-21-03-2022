@@ -83,7 +83,7 @@ const initialState: initialStateTypes = {
     },
 
     // @ts-ignore
-    favoriteCities: JSON.parse(localStorage.getItem('favoriteCities')) || {},
+    favoriteCities: !!localStorage.getItem('favoriteCities') ? JSON.parse(localStorage.getItem('favoriteCities')) : {},
 };
 
 // ACTIONS
