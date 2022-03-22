@@ -36,15 +36,40 @@ export interface FiveDaysForecasts {
     };
     DailyForecasts: ItemType[];
 }
+export interface CurrentConditionsType {
+    LocalObservationDateTime: string;
+    EpochTime: number;
+    WeatherText: string;
+    WeatherIcon: number;
+    HasPrecipitation: boolean;
+    PrecipitationType: null;
+    IsDayTime: boolean;
+    Temperature: {
+        Metric: {
+            Value: number;
+            Unit: string;
+            UnitType: number;
+        };
+        Imperial: {
+            Value: number;
+            Unit: string;
+            UnitType: number;
+        };
+    };
+    MobileLink: string;
+    Link: string;
+}
 interface initialStateTypes {
     searchResults: SearchResultsType[];
     fiveDaysForecasts: FiveDaysForecasts | null;
     locationKey: string;
+    currentConditions: CurrentConditionsType | null;
 }
 const initialState: initialStateTypes = {
     searchResults: [],
     locationKey: 'null',
     fiveDaysForecasts: null,
+    currentConditions: null,
 };
 
 export const autoCompleteSearchAction = createAsyncThunk<
@@ -75,6 +100,20 @@ export const fiveDaysForecastsAction = createAsyncThunk<
     }
 });
 
+export const currentConditionsAction = createAsyncThunk<
+    {},
+    {
+        locationKey: string;
+    }
+>('currentConditionsAction', async ({ locationKey }, { rejectWithValue }) => {
+    try {
+        let res = axiosInstance.get(endpoints({ locationKey, apikey }).currentConditions);
+        return res;
+    } catch (err) {
+        return rejectWithValue(err);
+    }
+});
+
 export const weatherSlice = createSlice({
     name: 'loading',
     initialState,
@@ -85,6 +124,9 @@ export const weatherSlice = createSlice({
         });
         builder.addCase<any>(fiveDaysForecastsAction.fulfilled, (state, { payload }) => {
             state.fiveDaysForecasts = payload.data;
+        });
+        builder.addCase<any>(currentConditionsAction.fulfilled, (state, { payload }) => {
+            state.currentConditions = payload.data[0];
         });
     },
 });

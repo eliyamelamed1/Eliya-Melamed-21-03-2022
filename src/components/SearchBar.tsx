@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { SearchResultsType, autoCompleteSearchAction, fiveDaysForecastsAction } from '../redux/slices/weatherSlice';
+import {
+    SearchResultsType,
+    autoCompleteSearchAction,
+    currentConditionsAction,
+    fiveDaysForecastsAction,
+} from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Autocomplete from '@mui/material/Autocomplete';
@@ -46,7 +51,10 @@ const SearchBar = () => {
         for (const obj of options) {
             if (obj.LocalizedName !== city) continue;
             const key = obj.Key;
-            return dispatch(fiveDaysForecastsAction({ locationKey: key }));
+            return (
+                dispatch(fiveDaysForecastsAction({ locationKey: key })) &&
+                dispatch(currentConditionsAction({ locationKey: key }))
+            );
         }
         return toast.error('Wrong city - please choose from one of the options ');
     };
