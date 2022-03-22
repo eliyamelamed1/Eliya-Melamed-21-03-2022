@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 
 function App() {
     return (
-        <div className='app'>
+        <>
             <ToastContainer />
             <Router>
                 <Navbar />
@@ -20,7 +20,7 @@ function App() {
                     <Route path='/favorites' element={<Favorites />} />
                 </Routes>
             </Router>
-        </div>
+        </>
     );
 }
 
