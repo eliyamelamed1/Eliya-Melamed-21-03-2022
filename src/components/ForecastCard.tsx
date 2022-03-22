@@ -1,7 +1,7 @@
 import React from 'react';
 
 const daysObj: string[] = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-export interface itemType {
+export interface ItemType {
     Date: string;
     EpochDate: number;
     Temperature: {
@@ -31,7 +31,7 @@ export interface itemType {
     Link: string;
 }
 
-const ForecastCard: React.FC<{ item: itemType }> = ({ item }) => {
+const ForecastCard: React.FC<{ item: ItemType }> = ({ item }) => {
     const minTemp = item.Temperature.Minimum.Value;
     const maxTemp = item.Temperature.Maximum.Value;
     const date = item.Date;

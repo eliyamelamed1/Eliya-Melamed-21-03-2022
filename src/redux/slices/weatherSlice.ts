@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { ItemType } from '../../components/ForecastCard';
 import axios from 'axios';
 import { endpoints } from '../../utils/enums';
 
@@ -19,11 +20,31 @@ export interface SearchResultsType {
         LocalizedName: string;
     };
 }
+
+export interface FiveDaysForecasts {
+    Headline: {
+        EffectiveDate: string;
+        EffectiveEpochDate: number;
+        Severity: number;
+        Text: string;
+        Category: string;
+        EndDate: string;
+        EndEpochDate: number;
+        MobileLink: string;
+        Link: string;
+    };
+    DailyForecasts: ItemType[];
+}
 interface initialStateTypes {
     searchResults: SearchResultsType[];
+    fiveDaysForecasts: FiveDaysForecasts | null;
     locationKey: string;
 }
-const initialState: initialStateTypes = { searchResults: [], locationKey: 'null' };
+const initialState: initialStateTypes = {
+    searchResults: [],
+    locationKey: 'null',
+    fiveDaysForecasts: null,
+};
 
 export const autoCompleteSearchAction = createAsyncThunk<
     {},
@@ -39,14 +60,14 @@ export const autoCompleteSearchAction = createAsyncThunk<
     }
 });
 
-export const fiveDaysForecasts = createAsyncThunk<
+export const fiveDaysForecastsAction = createAsyncThunk<
     {},
     {
-        q: string;
+        locationKey: string;
     }
->('fiveDaysForecasts', async ({ q }, { rejectWithValue }) => {
+>('fiveDaysForecastsAction', async ({ locationKey }, { rejectWithValue }) => {
     try {
-        let res = axios.get(endpoints({ q, apikey, locationKey: '215854' }).autoCompleteSearch);
+        let res = axios.get(endpoints({ locationKey, apikey }).fiveDaysForecasts);
         return res;
     } catch (err) {
         return rejectWithValue(err);
@@ -60,6 +81,9 @@ export const weatherSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase<any>(autoCompleteSearchAction.fulfilled, (state, { payload }) => {
             state.searchResults = payload.data;
+        });
+        builder.addCase<any>(fiveDaysForecastsAction.fulfilled, (state, { payload }) => {
+            state.fiveDaysForecasts = payload.data;
         });
     },
 });
