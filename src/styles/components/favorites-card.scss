@@ -1,0 +1,21 @@
+.favorite-card {
+    display: flex;
+    gap: 10rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    a {
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem;
+        gap: 2rem;
+        box-shadow: -1px 0px 8px 4px rgba(0, 0, 0, 0.5), inset 0 0 0 1000px rgba(0, 0, 0, 10%);
+    }
+    h1 {
+        text-transform: capitalize;
+    }
+}

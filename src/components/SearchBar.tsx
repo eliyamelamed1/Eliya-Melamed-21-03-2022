@@ -4,6 +4,7 @@ import {
     autoCompleteSearchAction,
     currentConditionsAction,
     fiveDaysForecastsAction,
+    setCityDetails,
 } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -51,10 +52,13 @@ const SearchBar = () => {
         for (const obj of options) {
             if (obj.LocalizedName !== city) continue;
             const key = obj.Key;
-            return (
-                dispatch(fiveDaysForecastsAction({ locationKey: key })) &&
-                dispatch(currentConditionsAction({ locationKey: key }))
-            );
+            setCityDetails({
+                key,
+                city,
+            });
+            dispatch(fiveDaysForecastsAction({ locationKey: key }));
+            dispatch(currentConditionsAction({ locationKey: key }));
+            return;
         }
         return toast.error('Wrong city - please choose from one of the options ');
     };

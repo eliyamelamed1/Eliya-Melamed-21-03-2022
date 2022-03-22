@@ -6,6 +6,8 @@ import { axiosInstance } from '../../utils/axiosInstance';
 import { endpoints } from '../../utils/enums';
 
 const apikey = 'wGmLAC5jxYd4WTsXJbnXhGmhaBlAZbSV';
+
+// TYPES
 export interface SearchResultsType {
     Version: number;
     Key: string;
@@ -64,14 +66,27 @@ interface initialStateTypes {
     fiveDaysForecasts: FiveDaysForecasts | null;
     locationKey: string;
     currentConditions: CurrentConditionsType | null;
+    cityDetails: {
+        city: string;
+        key: string;
+    };
+    favoriteCities: any;
 }
 const initialState: initialStateTypes = {
     searchResults: [],
     locationKey: 'null',
     fiveDaysForecasts: null,
     currentConditions: null,
+    cityDetails: {
+        city: 'Tel-Aviv',
+        key: '215854',
+    },
+
+    // @ts-ignore
+    favoriteCities: JSON.parse(localStorage.getItem('favoriteCities')) || {},
 };
 
+// ACTIONS
 export const autoCompleteSearchAction = createAsyncThunk<
     {},
     {
@@ -117,7 +132,16 @@ export const currentConditionsAction = createAsyncThunk<
 export const weatherSlice = createSlice({
     name: 'loading',
     initialState,
-    reducers: {},
+    reducers: {
+        setCityDetails: (state, { payload }) => {
+            state.cityDetails = payload;
+        },
+        setFavoriteCities: (state, { payload }) => {
+            if (state.favoriteCities[payload.key]) delete state.favoriteCities[payload.key];
+            else state.favoriteCities[payload.key] = payload;
+            localStorage.setItem('favoriteCities', JSON.stringify(state.favoriteCities));
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase<any>(autoCompleteSearchAction.fulfilled, (state, { payload }) => {
             state.searchResults = payload.data;
@@ -130,5 +154,7 @@ export const weatherSlice = createSlice({
         });
     },
 });
+
+export const { setCityDetails, setFavoriteCities } = weatherSlice.actions;
 
 export default weatherSlice.reducer;

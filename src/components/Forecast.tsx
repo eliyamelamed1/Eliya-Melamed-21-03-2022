@@ -8,26 +8,38 @@ import { RootState } from '../redux/store';
 
 const Forecast = () => {
     const dispatch = useDispatch();
-    const { fiveDaysForecasts, currentConditions } = useSelector((state: RootState) => state.weatherSlice);
+    const { fiveDaysForecasts, currentConditions, cityDetails } = useSelector((state: RootState) => state.weatherSlice);
     const { isLoading } = useSelector((state: RootState) => state.loadingSlice);
-    console.log(currentConditions);
+
     useEffect(() => {
-        dispatch(fiveDaysForecastsAction({ locationKey: '215854' }));
-        dispatch(currentConditionsAction({ locationKey: '215854' }));
-    }, [dispatch]);
+        dispatch(fiveDaysForecastsAction({ locationKey: cityDetails.key }));
+        dispatch(currentConditionsAction({ locationKey: cityDetails.key }));
+    }, [dispatch, cityDetails]);
+
+    const CityDetails = () => (
+        <section className='city-details'>
+            <h2>{cityDetails.city}</h2>
+            <h2>{currentConditions?.Temperature.Metric.Value}°</h2>
+        </section>
+    );
 
     if (!isLoading)
         return (
             <div className='forecast'>
-                <AddFavorite />
-                <h1 className='header'>{fiveDaysForecasts?.Headline.Text}</h1>
-                <section>
+                <header>
+                    <CityDetails />
+                    <AddFavorite />
+                </header>
+
+                <h1>{fiveDaysForecasts?.Headline.Text}</h1>
+                <section className='five-days-forecasts'>
                     {fiveDaysForecasts?.DailyForecasts.map((item) => {
                         return <ForecastCard item={item as ItemType} />;
                     })}
                 </section>
             </div>
         );
+
     return <></>;
 };
 
