@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { endpoints } from '../../utils/enums';
 
-const apikey = 'Ef3pkQ7Ujusncevg374cA2v5CbiDSn7F';
+const apikey = 'wGmLAC5jxYd4WTsXJbnXhGmhaBlAZbSV';
 export interface SearchResultsType {
     Version: number;
     Key: string;
@@ -33,6 +33,20 @@ export const autoCompleteSearchAction = createAsyncThunk<
 >('autoCompleteSearchAction', async ({ q }, { rejectWithValue }) => {
     try {
         let res = axios.get(endpoints({ q, apikey }).autoCompleteSearch);
+        return res;
+    } catch (err) {
+        return rejectWithValue(err);
+    }
+});
+
+export const fiveDaysForecasts = createAsyncThunk<
+    {},
+    {
+        q: string;
+    }
+>('fiveDaysForecasts', async ({ q }, { rejectWithValue }) => {
+    try {
+        let res = axios.get(endpoints({ q, apikey, locationKey: '215854' }).autoCompleteSearch);
         return res;
     } catch (err) {
         return rejectWithValue(err);

@@ -1,7 +1,10 @@
 @import './app.scss';
+@import './base/fonts.scss';
 @import './pages/home.scss';
 @import './components/search-bar.scss';
 @import './components/navbar.scss';
+@import './components/forecast.scss';
+@import './components/forecast-card.scss';
 
 ul {
     list-style-type: none;
