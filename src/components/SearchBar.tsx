@@ -48,17 +48,19 @@ const SearchBar = () => {
         setOptions(searchResults);
     }, [searchResults]);
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
         for (const obj of options) {
             if (obj.LocalizedName !== city) continue;
             const key = obj.Key;
-            setCityDetails({
-                key,
-                city,
-            });
-            dispatch(fiveDaysForecastsAction({ locationKey: key }));
-            dispatch(currentConditionsAction({ locationKey: key }));
-            return;
+            dispatch(
+                setCityDetails({
+                    key,
+                    city,
+                })
+            );
+            dispatch(fiveDaysForecastsAction({ locationKey: key })) &&
+                dispatch(currentConditionsAction({ locationKey: key }));
+            return setCity('');
         }
         return toast.error('Wrong city - please choose from one of the options ');
     };

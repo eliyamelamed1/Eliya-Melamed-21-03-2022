@@ -13,6 +13,7 @@ const AddFavorite = () => {
     const onClick = () => {
         dispatch(setFavoriteCities({ city, key }));
     };
+
     return (
         <div className='add-favorite'>
             {favoriteCities[key] ? (

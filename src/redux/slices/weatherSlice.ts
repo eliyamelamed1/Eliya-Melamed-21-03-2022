@@ -4,8 +4,9 @@ import { ItemType } from '../../components/ForecastCard';
 import axios from 'axios';
 import { axiosInstance } from '../../utils/axiosInstance';
 import { endpoints } from '../../utils/enums';
+import { tryParseJSONObject } from '../../utils/jsonParse';
 
-const apikey = 'wGmLAC5jxYd4WTsXJbnXhGmhaBlAZbSV';
+const apikey = 'Ef3pkQ7Ujusncevg374cA2v5CbiDSn7F';
 
 // TYPES
 export interface SearchResultsType {
@@ -82,8 +83,7 @@ const initialState: initialStateTypes = {
         key: '215854',
     },
 
-    // @ts-ignore
-    favoriteCities: !!localStorage.getItem('favoriteCities') ? JSON.parse(localStorage.getItem('favoriteCities')) : {},
+    favoriteCities: tryParseJSONObject(localStorage.getItem('favoriteCities')),
 };
 
 // ACTIONS
