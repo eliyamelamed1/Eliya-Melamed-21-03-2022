@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../redux/store';
-import { fiveDaysDummy } from '../fiveDaysForecasts';
 import { fiveDaysForecastsAction } from '../redux/slices/weatherSlice';
 
 const Forecast = () => {
@@ -13,7 +12,6 @@ const Forecast = () => {
     useEffect(() => {
         dispatch(fiveDaysForecastsAction({ locationKey: '215854' }));
     }, [dispatch]);
-    console.log(fiveDaysForecasts);
     return (
         <div className='forecast'>
             <h1 className='header'>{fiveDaysForecasts?.Headline.Text}</h1>
