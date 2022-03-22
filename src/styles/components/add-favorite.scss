@@ -1,0 +1,12 @@
+.add-favorite {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    .heart-icon {
+        color: 'red';
+    }
+    button {
+        @include button;
+    }
+}

@@ -2,6 +2,7 @@ import ForecastCard, { ItemType } from './ForecastCard';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import AddFavorite from './AddFavorite';
 import { RootState } from '../redux/store';
 import { fiveDaysForecastsAction } from '../redux/slices/weatherSlice';
 
@@ -14,6 +15,7 @@ const Forecast = () => {
     }, [dispatch]);
     return (
         <div className='forecast'>
+            <AddFavorite />
             <h1 className='header'>{fiveDaysForecasts?.Headline.Text}</h1>
             <section>
                 {fiveDaysForecasts?.DailyForecasts.map((item) => {

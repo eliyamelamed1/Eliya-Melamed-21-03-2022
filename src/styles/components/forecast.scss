@@ -1,13 +1,14 @@
 .forecast {
-    margin-top: 3rem;
-    padding: 10%;
+    margin-top: 2rem;
+    padding-inline: 10%;
+    padding-block: 2%;
     width: fit-content;
     display: flex;
     margin-inline: auto;
     text-align: center;
     align-items: center;
     justify-content: center;
-    gap: 5rem;
+    gap: 8rem;
     flex-direction: column;
     border-radius: 10px;
     box-shadow: inset 0 0 0 1000px rgb(255, 255, 255, 0.2);
