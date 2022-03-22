@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import Favorites from './pages/Favorites';
 import Home from './pages/Home';
+import LoaderContainer from './components/LoaderContainer';
 import Navbar from './components/Navbar';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -12,6 +13,7 @@ import { ToastContainer } from 'react-toastify';
 function App() {
     return (
         <>
+            <LoaderContainer />
             <ToastContainer />
             <Router>
                 <Navbar />

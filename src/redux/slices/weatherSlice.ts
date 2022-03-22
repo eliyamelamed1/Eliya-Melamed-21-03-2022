@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { ItemType } from '../../components/ForecastCard';
 import axios from 'axios';
+import { axiosInstance } from '../../utils/axiosInstance';
 import { endpoints } from '../../utils/enums';
 
 const apikey = 'wGmLAC5jxYd4WTsXJbnXhGmhaBlAZbSV';
@@ -67,7 +68,7 @@ export const fiveDaysForecastsAction = createAsyncThunk<
     }
 >('fiveDaysForecastsAction', async ({ locationKey }, { rejectWithValue }) => {
     try {
-        let res = axios.get(endpoints({ locationKey, apikey }).fiveDaysForecasts);
+        let res = axiosInstance.get(endpoints({ locationKey, apikey }).fiveDaysForecasts);
         return res;
     } catch (err) {
         return rejectWithValue(err);

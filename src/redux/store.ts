@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
+import loadingSlice from './slices/loadingSlice';
 import weatherSlice from './slices/weatherSlice';
 
 const store = configureStore({
     reducer: {
         weatherSlice,
+        loadingSlice,
     },
 });
 
