@@ -7,6 +7,10 @@ const store = configureStore({
         weatherSlice,
         loadingSlice,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 });
 
 export default store;

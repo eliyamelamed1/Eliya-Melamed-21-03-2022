@@ -13,15 +13,17 @@ const FavoriteCard = () => {
     useEffect(() => {
         // function to update favoriteCities details on each refresh
         Object.keys(favoriteCities)?.map(async (item) => {
-            item = favoriteCities[item];
-            // @ts-ignore
-            const { key, city } = item;
-            let res = await dispatch(currentConditionsAction({ locationKey: key }));
+            try {
+                item = favoriteCities[item];
+                // @ts-ignore
+                const { key, city } = item;
+                let res = await dispatch(currentConditionsAction({ locationKey: key }));
 
-            // @ts-ignore
-            const temperature = res.payload.data[0].Temperature.Metric.Value;
+                // @ts-ignore
+                const temperature = res.payload?.data?.[0].Temperature.Metric.Value;
 
-            dispatch(setFavoriteCitiesData({ city, key, temperature }));
+                dispatch(setFavoriteCitiesData({ city, key, temperature }));
+            } catch (err) {}
         });
     }, [favoriteCities, dispatch]);
 
@@ -36,10 +38,9 @@ const FavoriteCard = () => {
             temperature = degreesConverter({ degreesValue: temperature, degreesType: degrees });
 
             return (
-                // @ts-ignore
                 <Link key={city} to='/' onClick={() => onClick(item)}>
                     <h1>{city}</h1>
-                    <h1>{temperature.toFixed(1)}°</h1>
+                    <h1>{temperature?.toFixed(1)}°</h1>
                 </Link>
             );
         }
