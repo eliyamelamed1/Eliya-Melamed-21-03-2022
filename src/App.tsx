@@ -1,7 +1,7 @@
 import './styles/main.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import Favorites from './pages/Favorites';
 import Home from './pages/Home';
@@ -20,6 +20,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/favorites' element={<Favorites />} />
+                    <Route path='*' element={<Navigate to='/' />} />
                 </Routes>
             </Router>
         </>
