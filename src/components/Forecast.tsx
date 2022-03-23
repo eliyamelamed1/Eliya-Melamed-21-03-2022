@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddFavorite from './AddFavorite';
 import { Button } from '@mui/material';
 import { RootState } from '../redux/store';
+import { degreesConverter } from '../utils/degreesConverter';
 
 const Forecast = () => {
     const dispatch = useDispatch();
@@ -18,12 +19,20 @@ const Forecast = () => {
         dispatch(currentConditionsAction({ locationKey: currentCityAndKey.key }));
     }, [dispatch, currentCityAndKey]);
 
-    const CityDetails = () => (
-        <section className='city-details'>
-            <h2>{currentCityAndKey.city}</h2>
-            <h2>{currentConditions?.Temperature.Metric.Value}°</h2>
-        </section>
-    );
+    const CurrentCityWeather = () => {
+        if (!currentCityAndKey) return <></>;
+
+        const { city } = currentCityAndKey;
+        let temperature = currentConditions?.Temperature.Metric.Value;
+        if (!temperature || !city) return <></>;
+        temperature = degreesConverter({ degreesValue: temperature, degreesType: degrees });
+        return (
+            <section className='city-details'>
+                <h2>{city}</h2>
+                <h2>{temperature}°</h2>
+            </section>
+        );
+    };
 
     const onClick = () => {
         console.log(degrees);
@@ -38,7 +47,7 @@ const Forecast = () => {
                     <Button onClick={onClick} variant='contained'>
                         °{degrees}
                     </Button>
-                    <CityDetails />
+                    <CurrentCityWeather />
                     <AddFavorite />
                 </header>
 
