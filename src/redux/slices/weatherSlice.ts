@@ -64,7 +64,6 @@ export interface CurrentConditionsType {
 interface initialStateTypes {
     searchResults: SearchResultsType[];
     fiveDaysForecasts: FiveDaysForecasts | null;
-    locationKey: string;
     currentConditions: CurrentConditionsType | null;
     currentCityAndKey: {
         city: string;
@@ -76,14 +75,12 @@ interface initialStateTypes {
 }
 const initialState: initialStateTypes = {
     searchResults: [],
-    locationKey: 'null',
     fiveDaysForecasts: null,
     currentConditions: null,
     currentCityAndKey: {
         city: 'Tel-Aviv',
         key: '215854',
     },
-
     favoriteCities: tryParseJSONObject(localStorage.getItem('favoriteCities')),
     favoriteCitiesData: [],
     degrees: 'C',

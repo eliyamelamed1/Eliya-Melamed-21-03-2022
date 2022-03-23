@@ -23,7 +23,6 @@ axiosInstance.interceptors.request.use(
     },
     (err) => {
         store.dispatch(setLoading(false));
-        console.log('asdasd');
 
         return Promise.reject(err);
     }
