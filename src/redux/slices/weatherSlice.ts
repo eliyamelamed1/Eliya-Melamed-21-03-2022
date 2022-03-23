@@ -6,7 +6,7 @@ import { axiosInstance } from '../../utils/axiosInstance';
 import { endpoints } from '../../utils/enums';
 import { tryParseJSONObject } from '../../utils/jsonParse';
 
-export const apikey = 'lw1mxaqkihb6UBGlaMwT15QGAfBl3B0K';
+export const apikey = 'ONWDb7FT3PIGzh9GaWsijK2KA11USyVq';
 
 // TYPES
 export interface SearchResultsType {
