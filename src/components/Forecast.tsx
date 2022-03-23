@@ -1,5 +1,5 @@
 import ForecastCard, { ItemType } from './ForecastCard';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { currentConditionsAction, fiveDaysForecastsAction, setDegrees } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,10 +13,16 @@ const Forecast = () => {
     const { fiveDaysForecasts, currentConditions, currentCityAndKey, degrees } = useSelector(
         (state: RootState) => state.weatherSlice
     );
+    const [display, setDisplay] = useState(false);
 
     useEffect(() => {
-        dispatch(fiveDaysForecastsAction({ locationKey: currentCityAndKey.key }));
-        dispatch(currentConditionsAction({ locationKey: currentCityAndKey.key }));
+        const func = async () => {
+            setDisplay(false);
+            await dispatch(fiveDaysForecastsAction({ locationKey: currentCityAndKey.key }));
+            await dispatch(currentConditionsAction({ locationKey: currentCityAndKey.key }));
+            setDisplay(true);
+        };
+        func();
     }, [dispatch, currentCityAndKey]);
 
     const CurrentCityWeather = () => {
@@ -39,7 +45,7 @@ const Forecast = () => {
         return dispatch(setDegrees('C'));
     };
 
-    if (fiveDaysForecasts)
+    if (fiveDaysForecasts && currentCityAndKey && display)
         return (
             <div className='forecast'>
                 <header>
