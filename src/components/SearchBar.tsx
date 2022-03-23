@@ -4,7 +4,7 @@ import {
     autoCompleteSearchAction,
     currentConditionsAction,
     fiveDaysForecastsAction,
-    setCityDetails,
+    setCurrentCityAndKey,
 } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -53,7 +53,7 @@ const SearchBar = () => {
             if (obj.LocalizedName !== city) continue;
             const key = obj.Key;
             dispatch(
-                setCityDetails({
+                setCurrentCityAndKey({
                     key,
                     city,
                 })

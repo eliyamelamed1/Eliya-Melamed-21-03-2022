@@ -67,7 +67,7 @@ interface initialStateTypes {
     fiveDaysForecasts: FiveDaysForecasts | null;
     locationKey: string;
     currentConditions: CurrentConditionsType | null;
-    cityDetails: {
+    currentCityAndKey: {
         city: string;
         key: string;
     };
@@ -78,7 +78,7 @@ const initialState: initialStateTypes = {
     locationKey: 'null',
     fiveDaysForecasts: null,
     currentConditions: null,
-    cityDetails: {
+    currentCityAndKey: {
         city: 'Tel-Aviv',
         key: '215854',
     },
@@ -133,8 +133,8 @@ export const weatherSlice = createSlice({
     name: 'loading',
     initialState,
     reducers: {
-        setCityDetails: (state, { payload }) => {
-            state.cityDetails = payload;
+        setCurrentCityAndKey: (state, { payload }) => {
+            state.currentCityAndKey = payload;
         },
         setFavoriteCities: (state, { payload }) => {
             if (state.favoriteCities[payload.key]) delete state.favoriteCities[payload.key];
@@ -155,6 +155,6 @@ export const weatherSlice = createSlice({
     },
 });
 
-export const { setCityDetails, setFavoriteCities } = weatherSlice.actions;
+export const { setCurrentCityAndKey, setFavoriteCities } = weatherSlice.actions;
 
 export default weatherSlice.reducer;

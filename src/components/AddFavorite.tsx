@@ -8,8 +8,8 @@ import { setFavoriteCities } from '../redux/slices/weatherSlice';
 
 const AddFavorite = () => {
     const dispatch = useDispatch();
-    const { cityDetails, favoriteCities } = useSelector((state: RootState) => state.weatherSlice);
-    const { key, city } = cityDetails;
+    const { currentCityAndKey, favoriteCities } = useSelector((state: RootState) => state.weatherSlice);
+    const { key, city } = currentCityAndKey;
     const onClick = () => {
         dispatch(setFavoriteCities({ city, key }));
     };

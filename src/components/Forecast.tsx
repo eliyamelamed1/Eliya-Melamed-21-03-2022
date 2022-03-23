@@ -8,17 +8,19 @@ import { RootState } from '../redux/store';
 
 const Forecast = () => {
     const dispatch = useDispatch();
-    const { fiveDaysForecasts, currentConditions, cityDetails } = useSelector((state: RootState) => state.weatherSlice);
+    const { fiveDaysForecasts, currentConditions, currentCityAndKey } = useSelector(
+        (state: RootState) => state.weatherSlice
+    );
     const { isLoading } = useSelector((state: RootState) => state.loadingSlice);
 
     useEffect(() => {
-        dispatch(fiveDaysForecastsAction({ locationKey: cityDetails.key }));
-        dispatch(currentConditionsAction({ locationKey: cityDetails.key }));
-    }, [dispatch, cityDetails]);
+        dispatch(fiveDaysForecastsAction({ locationKey: currentCityAndKey.key }));
+        dispatch(currentConditionsAction({ locationKey: currentCityAndKey.key }));
+    }, [dispatch, currentCityAndKey]);
 
     const CityDetails = () => (
         <section className='city-details'>
-            <h2>{cityDetails.city}</h2>
+            <h2>{currentCityAndKey.city}</h2>
             <h2>{currentConditions?.Temperature.Metric.Value}°</h2>
         </section>
     );
