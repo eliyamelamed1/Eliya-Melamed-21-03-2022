@@ -29,13 +29,12 @@ const Forecast = () => {
         return (
             <section className='city-details'>
                 <h2>{city}</h2>
-                <h2>{temperature}°</h2>
+                <h2>{temperature.toFixed(1)}°</h2>
             </section>
         );
     };
 
     const onClick = () => {
-        console.log(degrees);
         if (degrees === 'C') return dispatch(setDegrees('F'));
         return dispatch(setDegrees('C'));
     };
