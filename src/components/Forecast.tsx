@@ -1,14 +1,15 @@
 import ForecastCard, { ItemType } from './ForecastCard';
 import React, { useEffect } from 'react';
-import { currentConditionsAction, fiveDaysForecastsAction } from '../redux/slices/weatherSlice';
+import { currentConditionsAction, fiveDaysForecastsAction, setDegrees } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddFavorite from './AddFavorite';
+import { Button } from '@mui/material';
 import { RootState } from '../redux/store';
 
 const Forecast = () => {
     const dispatch = useDispatch();
-    const { fiveDaysForecasts, currentConditions, currentCityAndKey } = useSelector(
+    const { fiveDaysForecasts, currentConditions, currentCityAndKey, degrees } = useSelector(
         (state: RootState) => state.weatherSlice
     );
 
@@ -24,10 +25,19 @@ const Forecast = () => {
         </section>
     );
 
+    const onClick = () => {
+        console.log(degrees);
+        if (degrees === 'C') return dispatch(setDegrees('F'));
+        return dispatch(setDegrees('C'));
+    };
+
     if (fiveDaysForecasts)
         return (
             <div className='forecast'>
                 <header>
+                    <Button onClick={onClick} variant='contained'>
+                        °{degrees}
+                    </Button>
                     <CityDetails />
                     <AddFavorite />
                 </header>

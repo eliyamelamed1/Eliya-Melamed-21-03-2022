@@ -37,8 +37,7 @@ axiosInstance.interceptors.response.use(
     (err) => {
         store.dispatch(setLoading(false));
 
-        toast.error(err.Message);
-
+        toast.error('Something went wrong please try again later');
         return Promise.reject(err);
     }
 );

@@ -1,5 +1,5 @@
 .forecast {
-    margin-top: 2rem;
+    margin-block: 2rem;
     padding-inline: 5%;
     padding-block: 2%;
     width: fit-content;
@@ -31,6 +31,9 @@
         width: 100%;
         align-items: center;
         flex-wrap: wrap;
+    }
+    h2 {
+        font-weight: 700;
     }
     .city-details {
         display: flex;

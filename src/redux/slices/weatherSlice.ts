@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { ItemType } from '../../components/ForecastCard';
+import { apikey } from '../../utils/constants';
 import axios from 'axios';
 import { axiosInstance } from '../../utils/axiosInstance';
 import { endpoints } from '../../utils/enums';
 import { tryParseJSONObject } from '../../utils/jsonParse';
-
-export const apikey = 'ONWDb7FT3PIGzh9GaWsijK2KA11USyVq';
 
 // TYPES
 export interface SearchResultsType {
@@ -73,6 +72,7 @@ interface initialStateTypes {
     };
     favoriteCities: any;
     favoriteCitiesData: any;
+    degrees: 'C' | 'F';
 }
 const initialState: initialStateTypes = {
     searchResults: [],
@@ -86,6 +86,7 @@ const initialState: initialStateTypes = {
 
     favoriteCities: tryParseJSONObject(localStorage.getItem('favoriteCities')),
     favoriteCitiesData: [],
+    degrees: 'C',
 };
 
 // ACTIONS
@@ -149,6 +150,9 @@ export const weatherSlice = createSlice({
             const { city, key, temperature } = payload;
             state.favoriteCitiesData[key] = { key, city, temperature };
         },
+        setDegrees: (state, { payload }) => {
+            state.degrees = payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase<any>(autoCompleteSearchAction.fulfilled, (state, { payload }) => {
@@ -163,6 +167,6 @@ export const weatherSlice = createSlice({
     },
 });
 
-export const { setCurrentCityAndKey, setFavoriteCities, setFavoriteCitiesData } = weatherSlice.actions;
+export const { setCurrentCityAndKey, setFavoriteCities, setFavoriteCitiesData, setDegrees } = weatherSlice.actions;
 
 export default weatherSlice.reducer;

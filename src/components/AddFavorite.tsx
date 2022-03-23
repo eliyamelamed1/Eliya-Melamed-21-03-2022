@@ -15,14 +15,13 @@ const AddFavorite = () => {
     };
 
     return (
-        <div className='add-favorite'>
+        <button className='add-favorite' onClick={onClick}>
             {favoriteCities[key] ? (
                 <FavoriteIcon fontSize='large' color='error' />
             ) : (
                 <FavoriteBorderIcon fontSize='large' color='error' />
             )}
-            <button onClick={onClick}>Add to Favorites</button>
-        </div>
+        </button>
     );
 };
 

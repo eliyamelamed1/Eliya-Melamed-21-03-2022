@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import { RootState } from '../redux/store';
+import { degreesConverter } from '../utils/degreesConverter';
 
 const FavoriteCard = () => {
-    const { favoriteCities, favoriteCitiesData, currentCityAndKey } = useSelector(
-        (state: RootState) => state.weatherSlice
-    );
+    const { favoriteCities, favoriteCitiesData, degrees } = useSelector((state: RootState) => state.weatherSlice);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -26,20 +25,24 @@ const FavoriteCard = () => {
         });
     }, [favoriteCities, dispatch]);
 
-    const Card = (item: { city: string; key: string; temperature: 'string' }) => {
-        const onClick = (item: { city: string; key: string; temperature: 'string' }) => {
+    const Card = (item: { city: string; key: string; temperature: number }) => {
+        const onClick = (item: { city: string; key: string; temperature: number }) => {
             const { key, city } = item;
             dispatch(setCurrentCityAndKey({ city, key }));
         };
 
-        if (item)
+        if (item) {
+            let { city, temperature } = item;
+            temperature = degreesConverter({ degreesValue: temperature, degreesType: degrees });
+
             return (
                 // @ts-ignore
-                <Link key={item.city} to='/' onClick={() => onClick(item)}>
-                    <h1>{item.city}</h1>
-                    <h1>{item.temperature}°</h1>
+                <Link key={city} to='/' onClick={() => onClick(item)}>
+                    <h1>{city}</h1>
+                    <h1>{temperature.toFixed(1)}°</h1>
                 </Link>
             );
+        }
     };
 
     return (
