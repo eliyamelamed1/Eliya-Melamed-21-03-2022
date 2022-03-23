@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use(
     },
     (err) => {
         store.dispatch(setLoading(false));
-        console.log(err);
+        console.log('asdasd');
 
         return Promise.reject(err);
     }
@@ -38,12 +38,9 @@ axiosInstance.interceptors.response.use(
     (err) => {
         store.dispatch(setLoading(false));
 
-        try {
-            const msg = err.Message;
-            toast.error(msg);
-        } catch {
-            toast.error('Something went wrong please try again later');
-        }
+        const msg = err?.Message;
+        if (msg) toast.error({ msg });
+        else toast.error('Something went wrong please try again later');
 
         return Promise.reject(err);
     }
