@@ -6,7 +6,7 @@ import { axiosInstance } from '../../utils/axiosInstance';
 import { endpoints } from '../../utils/enums';
 import { tryParseJSONObject } from '../../utils/jsonParse';
 
-const apikey = 'Ef3pkQ7Ujusncevg374cA2v5CbiDSn7F';
+export const apikey = 'lw1mxaqkihb6UBGlaMwT15QGAfBl3B0K';
 
 // TYPES
 export interface SearchResultsType {
@@ -72,6 +72,7 @@ interface initialStateTypes {
         key: string;
     };
     favoriteCities: any;
+    favoriteCitiesData: any;
 }
 const initialState: initialStateTypes = {
     searchResults: [],
@@ -84,6 +85,7 @@ const initialState: initialStateTypes = {
     },
 
     favoriteCities: tryParseJSONObject(localStorage.getItem('favoriteCities')),
+    favoriteCitiesData: [],
 };
 
 // ACTIONS
@@ -94,7 +96,7 @@ export const autoCompleteSearchAction = createAsyncThunk<
     }
 >('autoCompleteSearchAction', async ({ q }, { rejectWithValue }) => {
     try {
-        let res = axios.get(endpoints({ q, apikey }).autoCompleteSearch);
+        let res = await axios.get(endpoints({ q, apikey }).autoCompleteSearch);
         return res;
     } catch (err) {
         return rejectWithValue(err);
@@ -108,7 +110,7 @@ export const fiveDaysForecastsAction = createAsyncThunk<
     }
 >('fiveDaysForecastsAction', async ({ locationKey }, { rejectWithValue }) => {
     try {
-        let res = axiosInstance.get(endpoints({ locationKey, apikey }).fiveDaysForecasts);
+        let res = await axiosInstance.get(endpoints({ locationKey, apikey }).fiveDaysForecasts);
         return res;
     } catch (err) {
         return rejectWithValue(err);
@@ -122,7 +124,7 @@ export const currentConditionsAction = createAsyncThunk<
     }
 >('currentConditionsAction', async ({ locationKey }, { rejectWithValue }) => {
     try {
-        let res = axiosInstance.get(endpoints({ locationKey, apikey }).currentConditions);
+        let res = await axiosInstance.get(endpoints({ locationKey, apikey }).currentConditions);
         return res;
     } catch (err) {
         return rejectWithValue(err);
@@ -137,9 +139,15 @@ export const weatherSlice = createSlice({
             state.currentCityAndKey = payload;
         },
         setFavoriteCities: (state, { payload }) => {
-            if (state.favoriteCities[payload.key]) delete state.favoriteCities[payload.key];
-            else state.favoriteCities[payload.key] = payload;
+            if (state.favoriteCities[payload.key]) {
+                delete state.favoriteCities[payload.key];
+                delete state.favoriteCitiesData[payload.key];
+            } else state.favoriteCities[payload.key] = payload;
             localStorage.setItem('favoriteCities', JSON.stringify(state.favoriteCities));
+        },
+        setFavoriteCitiesData: (state, { payload }) => {
+            const { city, key, temperature } = payload;
+            state.favoriteCitiesData[key] = { key, city, temperature };
         },
     },
     extraReducers: (builder) => {
@@ -155,6 +163,6 @@ export const weatherSlice = createSlice({
     },
 });
 
-export const { setCurrentCityAndKey, setFavoriteCities } = weatherSlice.actions;
+export const { setCurrentCityAndKey, setFavoriteCities, setFavoriteCitiesData } = weatherSlice.actions;
 
 export default weatherSlice.reducer;
