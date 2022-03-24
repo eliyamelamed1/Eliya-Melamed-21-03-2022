@@ -16,26 +16,25 @@ const FavoriteCard: React.FC<{ item: ItemType }> = ({ item }) => {
     const { tempUnits } = useSelector((state: RootState) => state.weatherSlice);
     const dispatch = useDispatch();
 
-    const Card = (item: { city: string; key: string; temperature: number }) => {
-        const onClick = async (item: { city: string; key: string; temperature: number }) => {
-            const { key, city } = item;
-            await dispatch(setCurrentCityAndKey({ city, key }));
-        };
+    if (!item) return <></>;
 
-        if (item) {
-            let { city, temperature } = item;
-            temperature = unitTypeConverter({ temp: temperature, unit: tempUnits });
-
-            return (
-                <Link key={city} to='/' onClick={() => onClick(item)}>
-                    <h2>{city}</h2>
-                    <h2>{temperature?.toFixed(1)}°</h2>
-                </Link>
-            );
-        }
+    const onClick = async () => {
+        const { key, city } = item;
+        await dispatch(setCurrentCityAndKey({ city, key }));
     };
 
-    return <div className='favorite-card'>{Card(item)}</div>;
+    const Card = () => {
+        let { city, temperature } = item;
+        temperature = unitTypeConverter({ temp: temperature, unit: tempUnits });
+        return (
+            <Link key={city} to='/' onClick={onClick}>
+                <h2>{city}</h2>
+                <h2>{temperature?.toFixed(1)}°</h2>
+            </Link>
+        );
+    };
+
+    return <div className='favorite-card'>{Card()}</div>;
 };
 
 export default FavoriteCard;

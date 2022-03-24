@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import Favorites from './pages/Favorites';
 import Home from './pages/Home';
 import LoaderContainer from './components/LoaderContainer';
-import MaterialUISwitch from './components/ThemeSwitch';
 import Navbar from './components/Navbar';
 import { ToastContainer } from 'react-toastify';
 

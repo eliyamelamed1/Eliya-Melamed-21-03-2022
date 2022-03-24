@@ -51,7 +51,7 @@ const Navbar: React.FC<any> = ({ toggle }) => {
                     {page.name}
                 </Link>
             ))}
-            <MaterialUISwitch defaultChecked onClick={toggle} />
+            <MaterialUISwitch onClick={toggle} />
         </Box>
     );
     const mobileLinks = (
@@ -102,7 +102,7 @@ const Navbar: React.FC<any> = ({ toggle }) => {
                         component='div'
                         sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                     >
-                        <MaterialUISwitch defaultChecked onClick={toggle} />
+                        <MaterialUISwitch onClick={toggle} />
                     </Typography>
                     {desktopLinks}
                 </Toolbar>
