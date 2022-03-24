@@ -19,7 +19,7 @@ function App() {
     };
 
     return (
-        <html data-theme={theme}>
+        <html data-theme={theme} className='html'>
             <LoaderContainer />
             <ToastContainer />
             <Router>
