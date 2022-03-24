@@ -1,38 +1,10 @@
+import { ItemType } from '../redux/types/weatherTypes';
 import React from 'react';
 import { RootState } from '../redux/store';
 import { unitTypeConverter } from '../utils/unitTypeConverter';
 import { useSelector } from 'react-redux';
 
-const daysEnum: string[] = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-export interface ItemType {
-    Date: string;
-    EpochDate: number;
-    Temperature: {
-        Minimum: {
-            Value: number;
-            Unit: string;
-            UnitType: number;
-        };
-        Maximum: {
-            Value: number;
-            Unit: string;
-            UnitType: number;
-        };
-    };
-    Day: {
-        Icon: number;
-        IconPhrase: string;
-        HasPrecipitation: boolean;
-    };
-    Night: {
-        Icon: number;
-        IconPhrase: string;
-        HasPrecipitation: boolean;
-    };
-    Sources: [string];
-    MobileLink: string;
-    Link: string;
-}
+const daysEnum: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const ForecastCard: React.FC<{ item: ItemType }> = ({ item }) => {
     const date = item.Date;

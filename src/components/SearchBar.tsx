@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-    SearchResultsType,
     autoCompleteSearchAction,
     currentConditionsAction,
     fiveDaysForecastsAction,
@@ -11,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from '@mui/material/Autocomplete';
 import { CircularProgress } from '@mui/material';
 import { RootState } from '../redux/store';
+import { SearchResultsType } from '../redux/types/weatherTypes';
 import TextField from '@mui/material/TextField';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';

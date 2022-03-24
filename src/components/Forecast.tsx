@@ -1,10 +1,11 @@
-import ForecastCard, { ItemType } from './ForecastCard';
 import React, { useEffect, useState } from 'react';
 import { currentConditionsAction, fiveDaysForecastsAction, setTempUnit } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '@mui/material';
 import FavoriteBtn from './FavoriteBtn';
+import ForecastCard from './ForecastCard';
+import { ItemType } from '../redux/types/weatherTypes';
 import { RootState } from '../redux/store';
 import { unitTypeConverter } from '../utils/unitTypeConverter';
 

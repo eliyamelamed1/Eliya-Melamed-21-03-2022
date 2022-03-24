@@ -1,78 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { ItemType } from '../../components/ForecastCard';
 import { apikey } from '../../utils/constants';
 import axios from 'axios';
 import { axiosInstance } from '../../utils/axiosInstance';
 import { endpoints } from '../../utils/enums';
+import { initialStateTypes } from '../types/weatherTypes';
 import { tryParseJSONObject } from '../../utils/jsonParse';
 
-// TYPES
-export interface SearchResultsType {
-    Version: number;
-    Key: string;
-    Type: string;
-    Rank: number;
-    LocalizedName: string;
-    Country: {
-        ID: string;
-        LocalizedName: string;
-    };
-    AdministrativeArea: {
-        ID: string;
-        LocalizedName: string;
-    };
-}
-
-export interface FiveDaysForecasts {
-    Headline: {
-        EffectiveDate: string;
-        EffectiveEpochDate: number;
-        Severity: number;
-        Text: string;
-        Category: string;
-        EndDate: string;
-        EndEpochDate: number;
-        MobileLink: string;
-        Link: string;
-    };
-    DailyForecasts: ItemType[];
-}
-export interface CurrentConditionsType {
-    LocalObservationDateTime: string;
-    EpochTime: number;
-    WeatherText: string;
-    WeatherIcon: number;
-    HasPrecipitation: boolean;
-    PrecipitationType: null;
-    IsDayTime: boolean;
-    Temperature: {
-        Metric: {
-            Value: number;
-            Unit: string;
-            UnitType: number;
-        };
-        Imperial: {
-            Value: number;
-            Unit: string;
-            UnitType: number;
-        };
-    };
-    MobileLink: string;
-    Link: string;
-}
-interface initialStateTypes {
-    searchResults: SearchResultsType[];
-    fiveDaysForecasts: FiveDaysForecasts | null;
-    currentConditions: CurrentConditionsType | null;
-    currentCityAndKey: {
-        city: string;
-        key: string;
-    };
-    favoriteCities: any;
-    favoriteCitiesData: any;
-    tempUnits: 'C' | 'F';
-}
 const initialState: initialStateTypes = {
     searchResults: [],
     fiveDaysForecasts: null,
@@ -86,7 +20,6 @@ const initialState: initialStateTypes = {
     tempUnits: 'C',
 };
 
-// ACTIONS
 export const autoCompleteSearchAction = createAsyncThunk<
     {},
     {
