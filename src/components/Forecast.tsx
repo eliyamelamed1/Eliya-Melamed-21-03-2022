@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { currentConditionsAction, fiveDaysForecastsAction, setTempUnit } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button } from '@mui/material';
 import FavoriteBtn from './FavoriteBtn';
 import ForecastCard from './ForecastCard';
 import { ItemType } from '../redux/types/weatherTypes';
@@ -15,17 +14,6 @@ const Forecast = () => {
         (state: RootState) => state.weatherSlice
     );
     const [display, setDisplay] = useState(false);
-
-    useEffect(() => {
-        const func = async () => {
-            if (currentCityAndKey.city === '' || currentCityAndKey.key === '') return;
-            setDisplay(false);
-            await dispatch(fiveDaysForecastsAction({ locationKey: currentCityAndKey.key }));
-            await dispatch(currentConditionsAction({ locationKey: currentCityAndKey.key }));
-            setDisplay(true);
-        };
-        func();
-    }, [dispatch, currentCityAndKey]);
 
     const CurrentCityWeather = () => {
         if (!currentCityAndKey) return <></>;
@@ -47,7 +35,19 @@ const Forecast = () => {
         return dispatch(setTempUnit('C'));
     };
 
+    useEffect(() => {
+        const fetchWeather = async () => {
+            if (currentCityAndKey.city === '' || currentCityAndKey.key === '') return;
+            setDisplay(false);
+            await dispatch(fiveDaysForecastsAction({ locationKey: currentCityAndKey.key }));
+            await dispatch(currentConditionsAction({ locationKey: currentCityAndKey.key }));
+            setDisplay(true);
+        };
+        fetchWeather();
+    }, [dispatch, currentCityAndKey]);
+
     if (!display) return <></>;
+
     return (
         <div className='forecast'>
             <header>

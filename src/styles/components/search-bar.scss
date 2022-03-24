@@ -7,9 +7,10 @@
     row-gap: 2rem;
     justify-content: center;
     flex-wrap: wrap;
+    color: white;
     .auto-complete {
         width: clamp(10rem, 70vw, 30rem);
-        color: 'black';
+        color: white;
     }
     button {
         @include button;

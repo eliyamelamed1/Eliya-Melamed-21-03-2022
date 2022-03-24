@@ -11,12 +11,16 @@
 
 :root {
     --background: url('../assets/296-2960362_anime-blue-sky.jpg');
+    --background-position: unset;
+    --box-shadow: unset;
     --primary-color: #00aaf8e0;
-    --text-primary: white;
+    --text-primary: black;
 }
 
 [data-theme='dark'] {
-    --background: rgb(37, 37, 37);
+    --background: url('../assets/sunset3.jpg');
+    --background-position: bottom;
+    --box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 50%);
     --primary-color: black;
     --text-primary: white;
 }
@@ -30,6 +34,8 @@ li {
 
 html {
     background: var(--background);
+    background-position: var(--background-position);
+    box-shadow: var(--box-shadow);
     height: 100vh;
     z-index: 1;
     font-size: 16px;

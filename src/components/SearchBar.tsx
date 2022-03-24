@@ -74,12 +74,16 @@ const SearchBar = () => {
                 options={options}
                 loading={loading}
                 getOptionLabel={(option) => option.LocalizedName}
+                color='white'
                 renderInput={(params) => (
                     <TextField
                         onSelect={onChange}
                         name='city'
                         {...params}
                         label='Cities'
+                        InputLabelProps={{
+                            className: 'label',
+                        }}
                         InputProps={{
                             ...params.InputProps,
                             type: 'search',

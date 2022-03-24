@@ -74,11 +74,11 @@ export const geoPositionSearchAction = createAsyncThunk<{}, { dispatch: any }>(
                 const res = await axiosInstance.get(endpoints({ apikey, q }).geoPositionSearch);
                 const key = res.data.Key;
                 const city = res.data.EnglishName;
-                dispatch(setCurrentCityAndKey({ key, city }));
+                return dispatch(setCurrentCityAndKey({ key, city }));
             } catch (err) {
                 const key = '215854';
                 const city = 'Tel-Aviv';
-                dispatch(setCurrentCityAndKey({ key, city }));
+                return dispatch(setCurrentCityAndKey({ key, city }));
             }
         });
     }
