@@ -18,6 +18,7 @@ const Forecast = () => {
 
     useEffect(() => {
         const func = async () => {
+            if (currentCityAndKey.city === '' || currentCityAndKey.key === '') return;
             setDisplay(false);
             await dispatch(fiveDaysForecastsAction({ locationKey: currentCityAndKey.key }));
             await dispatch(currentConditionsAction({ locationKey: currentCityAndKey.key }));

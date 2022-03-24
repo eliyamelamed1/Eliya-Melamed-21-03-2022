@@ -12,9 +12,10 @@ const initialState: initialStateTypes = {
     fiveDaysForecasts: null,
     currentConditions: null,
     currentCityAndKey: {
-        city: 'Tel-Aviv',
-        key: '215854',
+        city: '',
+        key: '',
     },
+    geoPosition: {},
     favoriteCities: tryParseJSONObject(localStorage.getItem('favoriteCities')),
     favoriteCitiesData: [],
     tempUnits: 'C',
@@ -61,6 +62,28 @@ export const currentConditionsAction = createAsyncThunk<
         return rejectWithValue(err);
     }
 });
+
+export const geoPositionSearchAction = createAsyncThunk<{}, { dispatch: any }>(
+    'geoPositionSearchAction',
+    async ({ dispatch }, { rejectWithValue }) => {
+        navigator.geolocation.getCurrentPosition(async function (position) {
+            try {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                const q = lat + ',' + lon;
+
+                const res = await axiosInstance.get(endpoints({ apikey, q }).geoPositionSearch);
+                const key = res.data.Key;
+                const city = res.data.EnglishName;
+                dispatch(setCurrentCityAndKey({ key, city }));
+            } catch (err) {
+                const key = '215854';
+                const city = 'Tel-Aviv';
+                dispatch(setCurrentCityAndKey({ key, city }));
+            }
+        });
+    }
+);
 
 export const weatherSlice = createSlice({
     name: 'loading',

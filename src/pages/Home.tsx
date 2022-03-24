@@ -1,33 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Forecast from '../components/Forecast';
+import { RootState } from '../redux/store';
 import SearchBar from '../components/SearchBar';
+import { geoPositionSearchAction } from '../redux/slices/weatherSlice';
 
-const options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0,
-};
-const success = (pos: any) => {
-    var crd = pos.coords;
-
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
-};
-const error = (err: any) => {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-};
 const Home = () => {
+    const { currentCityAndKey } = useSelector((state: RootState) => state.weatherSlice);
+    const dispatch = useDispatch();
+    const [display, setDisplay] = useState(false);
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(success, error, options);
-    }, []);
+        const fetch = async () => {
+            setDisplay(false);
+            if (currentCityAndKey.city === '' && currentCityAndKey.key === '') {
+                await dispatch(geoPositionSearchAction({ dispatch }));
+            }
+            setDisplay(true);
+        };
+        fetch();
+    }, [currentCityAndKey, dispatch]);
 
     return (
         <div className='home'>
             <SearchBar />
-            <Forecast />
+            {display && <Forecast />}
         </div>
     );
 };

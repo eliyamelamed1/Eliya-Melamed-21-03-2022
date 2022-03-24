@@ -91,4 +91,5 @@ export interface initialStateTypes {
     favoriteCities: any;
     favoriteCitiesData: any;
     tempUnits: 'C' | 'F';
+    geoPosition: any;
 }
