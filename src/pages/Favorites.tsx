@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import FavoriteCard from '../components/FavoriteCard';
 import { RootState } from '../redux/store';
-import { unitTypeConverter } from '../utils/unitTypeConverter';
 
 const Favorites = () => {
     const { favoriteCities, favoriteCitiesData } = useSelector((state: RootState) => state.weatherSlice);

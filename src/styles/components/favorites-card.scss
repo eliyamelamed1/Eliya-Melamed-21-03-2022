@@ -1,18 +1,13 @@
 .favorite-card {
     text-align: center;
+    width: 15rem;
+    height: 15rem;
+    box-shadow: -1px 0px 8px 4px rgba(0, 0, 0, 0.5), inset 0 0 0 1000px rgba(0, 0, 0, 50%);
+    border-radius: 10px;
     a {
         display: flex;
         flex-direction: column;
-        border-radius: 10px;
-        justify-content: center;
-        align-items: center;
-        padding: 3rem;
-        gap: 2rem;
-        width: 15rem;
-        height: 15rem;
-        box-shadow: -1px 0px 8px 4px rgba(0, 0, 0, 0.5), inset 0 0 0 1000px rgba(0, 0, 0, 50%);
-    }
-    h1 {
-        text-transform: capitalize;
+        justify-content: space-around;
+        height: 100%;
     }
 }

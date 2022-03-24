@@ -28,8 +28,8 @@ const FavoriteCard: React.FC<{ item: ItemType }> = ({ item }) => {
 
             return (
                 <Link key={city} to='/' onClick={() => onClick(item)}>
-                    <h1>{city}</h1>
-                    <h1>{temperature?.toFixed(1)}°</h1>
+                    <h2>{city}</h2>
+                    <h2>{temperature?.toFixed(1)}°</h2>
                 </Link>
             );
         }
