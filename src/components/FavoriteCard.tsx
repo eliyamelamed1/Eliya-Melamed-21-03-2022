@@ -1,31 +1,20 @@
-import React, { useEffect } from 'react';
-import { currentConditionsAction, setCurrentCityAndKey, setFavoriteCitiesData } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
+import React from 'react';
 import { RootState } from '../redux/store';
+import { setCurrentCityAndKey } from '../redux/slices/weatherSlice';
 import { unitTypeConverter } from '../utils/unitTypeConverter';
 
-const FavoriteCard = () => {
-    const { favoriteCities, favoriteCitiesData, tempUnits } = useSelector((state: RootState) => state.weatherSlice);
+interface ItemType {
+    city: string;
+    key: string;
+    temperature: number;
+}
+
+const FavoriteCard: React.FC<{ item: ItemType }> = ({ item }) => {
+    const { tempUnits } = useSelector((state: RootState) => state.weatherSlice);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        // function to update favoriteCities details on each refresh
-        Object.keys(favoriteCities)?.map(async (item) => {
-            try {
-                item = favoriteCities[item];
-                // @ts-ignore
-                const { key, city } = item;
-                let res = await dispatch(currentConditionsAction({ locationKey: key }));
-
-                // @ts-ignore
-                const temperature = res.payload?.data?.[0].Temperature.Metric.Value;
-
-                dispatch(setFavoriteCitiesData({ city, key, temperature }));
-            } catch (err) {}
-        });
-    }, [favoriteCities, dispatch]);
 
     const Card = (item: { city: string; key: string; temperature: number }) => {
         const onClick = async (item: { city: string; key: string; temperature: number }) => {
@@ -46,13 +35,7 @@ const FavoriteCard = () => {
         }
     };
 
-    return (
-        <div className='favorite-card'>
-            {Object.keys(favoriteCitiesData)?.map((item) => {
-                return Card(favoriteCitiesData[item]);
-            })}
-        </div>
-    );
+    return <div className='favorite-card'>{Card(item)}</div>;
 };
 
 export default FavoriteCard;

@@ -1,4 +1,9 @@
 .favorites {
     margin-inline: 10%;
     margin-block: 3%;
+    display: flex;
+    gap: 10rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
