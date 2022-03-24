@@ -6,7 +6,7 @@ import React from 'react';
 import { RootState } from '../redux/store';
 import { setFavoriteCities } from '../redux/slices/weatherSlice';
 
-const AddFavorite = () => {
+const FavoriteBtn = () => {
     const dispatch = useDispatch();
     const { currentCityAndKey, favoriteCities } = useSelector((state: RootState) => state.weatherSlice);
     const { key, city } = currentCityAndKey;
@@ -14,15 +14,17 @@ const AddFavorite = () => {
         dispatch(setFavoriteCities({ city, key }));
     };
 
+    const displayBtn = () => {
+        const isAlreadyFavorite = favoriteCities[key];
+        if (isAlreadyFavorite) return <FavoriteIcon fontSize='large' color='error' />;
+        return <FavoriteBorderIcon fontSize='large' color='error' />;
+    };
+
     return (
         <button className='add-favorite' onClick={onClick}>
-            {favoriteCities[key] ? (
-                <FavoriteIcon fontSize='large' color='error' />
-            ) : (
-                <FavoriteBorderIcon fontSize='large' color='error' />
-            )}
+            {displayBtn()}
         </button>
     );
 };
 
-export default AddFavorite;
+export default FavoriteBtn;

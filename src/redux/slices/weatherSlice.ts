@@ -71,7 +71,7 @@ interface initialStateTypes {
     };
     favoriteCities: any;
     favoriteCitiesData: any;
-    degrees: 'C' | 'F';
+    tempUnits: 'C' | 'F';
 }
 const initialState: initialStateTypes = {
     searchResults: [],
@@ -83,7 +83,7 @@ const initialState: initialStateTypes = {
     },
     favoriteCities: tryParseJSONObject(localStorage.getItem('favoriteCities')),
     favoriteCitiesData: [],
-    degrees: 'C',
+    tempUnits: 'C',
 };
 
 // ACTIONS
@@ -147,8 +147,8 @@ export const weatherSlice = createSlice({
             const { city, key, temperature } = payload;
             state.favoriteCitiesData[key] = { key, city, temperature };
         },
-        setDegrees: (state, { payload }) => {
-            state.degrees = payload;
+        setTempUnit: (state, { payload }) => {
+            state.tempUnits = payload;
         },
     },
     extraReducers: (builder) => {
@@ -164,6 +164,6 @@ export const weatherSlice = createSlice({
     },
 });
 
-export const { setCurrentCityAndKey, setFavoriteCities, setFavoriteCitiesData, setDegrees } = weatherSlice.actions;
+export const { setCurrentCityAndKey, setFavoriteCities, setFavoriteCitiesData, setTempUnit } = weatherSlice.actions;
 
 export default weatherSlice.reducer;

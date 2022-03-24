@@ -76,7 +76,6 @@ const SearchBar = () => {
                 getOptionLabel={(option) => option.LocalizedName}
                 renderInput={(params) => (
                     <TextField
-                        key={'asd'}
                         onSelect={onChange}
                         name='city'
                         {...params}

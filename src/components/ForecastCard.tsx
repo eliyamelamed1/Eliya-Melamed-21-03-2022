@@ -1,9 +1,9 @@
 import React from 'react';
 import { RootState } from '../redux/store';
-import { degreesConverter } from '../utils/degreesConverter';
+import { unitTypeConverter } from '../utils/unitTypeConverter';
 import { useSelector } from 'react-redux';
 
-const daysObj: string[] = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const daysEnum: string[] = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 export interface ItemType {
     Date: string;
     EpochDate: number;
@@ -35,17 +35,19 @@ export interface ItemType {
 }
 
 const ForecastCard: React.FC<{ item: ItemType }> = ({ item }) => {
-    const { degrees } = useSelector((state: RootState) => state.weatherSlice);
+    const date = item.Date;
+    const day = daysEnum[new Date(date).getDay()];
+    const { tempUnits } = useSelector((state: RootState) => state.weatherSlice);
 
     let minTemp = item.Temperature.Minimum.Value;
-    minTemp = degreesConverter({ degreesValue: minTemp, degreesType: degrees });
+    minTemp = unitTypeConverter({ temp: minTemp, unit: tempUnits });
+
     let maxTemp = item.Temperature.Maximum.Value;
-    maxTemp = degreesConverter({ degreesValue: maxTemp, degreesType: degrees });
-    const date = item.Date;
-    const day = new Date(date).getDay();
+    maxTemp = unitTypeConverter({ temp: maxTemp, unit: tempUnits });
+
     return (
-        <div className='forecast-card'>
-            <h3> {daysObj[day]} </h3>
+        <div className='forecast-card' key={day}>
+            <h3> {day} </h3>
             <h3>
                 {Math.round(minTemp)}° - {Math.round(maxTemp)}°
             </h3>
