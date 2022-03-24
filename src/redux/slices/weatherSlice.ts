@@ -15,9 +15,8 @@ const initialState: initialStateTypes = {
         city: '',
         key: '',
     },
-    geoPosition: {},
     favoriteCities: tryParseJSONObject(localStorage.getItem('favoriteCities')),
-    favoriteCitiesData: [],
+    favoriteCitiesWeather: [],
     tempUnits: 'C',
 };
 
@@ -95,13 +94,14 @@ export const weatherSlice = createSlice({
         setFavoriteCities: (state, { payload }) => {
             if (state.favoriteCities[payload.key]) {
                 delete state.favoriteCities[payload.key];
-                delete state.favoriteCitiesData[payload.key];
+                delete state.favoriteCitiesWeather[payload.key];
             } else state.favoriteCities[payload.key] = payload;
             localStorage.setItem('favoriteCities', JSON.stringify(state.favoriteCities));
         },
-        setFavoriteCitiesData: (state, { payload }) => {
+
+        setFavoriteCitiesWeather: (state, { payload }) => {
             const { city, key, temperature } = payload;
-            state.favoriteCitiesData[key] = { key, city, temperature };
+            state.favoriteCitiesWeather[key] = { key, city, temperature };
         },
         setTempUnit: (state, { payload }) => {
             state.tempUnits = payload;
@@ -120,6 +120,6 @@ export const weatherSlice = createSlice({
     },
 });
 
-export const { setCurrentCityAndKey, setFavoriteCities, setFavoriteCitiesData, setTempUnit } = weatherSlice.actions;
+export const { setCurrentCityAndKey, setFavoriteCities, setFavoriteCitiesWeather, setTempUnit } = weatherSlice.actions;
 
 export default weatherSlice.reducer;

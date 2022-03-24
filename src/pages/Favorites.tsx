@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { currentConditionsAction, setFavoriteCitiesData } from '../redux/slices/weatherSlice';
+import { currentConditionsAction, setFavoriteCitiesWeather } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import FavoriteCard from '../components/FavoriteCard';
 import { RootState } from '../redux/store';
 
 const Favorites = () => {
-    const { favoriteCities, favoriteCitiesData } = useSelector((state: RootState) => state.weatherSlice);
+    const { favoriteCities, favoriteCitiesWeather } = useSelector((state: RootState) => state.weatherSlice);
     const dispatch = useDispatch();
     const [display, setDisplay] = useState(false);
     useEffect(() => {
         // function to update favoriteCities details on each refresh
-        Object.keys(favoriteCities)?.map(async (item) => {
+        Object.keys(favoriteCities)?.map(async (item: string) => {
             try {
                 setDisplay(false);
-                item = favoriteCities[item];
-                // @ts-ignore
-                const { key, city } = item;
+                const { key, city } = favoriteCities[item];
                 let res = await dispatch(currentConditionsAction({ locationKey: key }));
 
                 // @ts-ignore
                 const temperature = res.payload?.data?.[0].Temperature.Metric.Value;
 
-                await dispatch(setFavoriteCitiesData({ city, key, temperature }));
+                await dispatch(setFavoriteCitiesWeather({ city, key, temperature }));
                 setDisplay(true);
             } catch (err) {
                 setDisplay(true);
@@ -34,8 +32,8 @@ const Favorites = () => {
 
     return (
         <div className='favorites'>
-            {Object.keys(favoriteCitiesData)?.map((item) => {
-                return <FavoriteCard item={favoriteCitiesData[item]} />;
+            {Object.keys(favoriteCitiesWeather)?.map((item) => {
+                return <FavoriteCard item={favoriteCitiesWeather[item]} />;
             })}
         </div>
     );

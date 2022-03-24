@@ -80,6 +80,7 @@ export interface CurrentConditionsType {
     MobileLink: string;
     Link: string;
 }
+
 export interface initialStateTypes {
     searchResults: SearchResultsType[];
     fiveDaysForecasts: FiveDaysForecasts | null;
@@ -88,8 +89,7 @@ export interface initialStateTypes {
         city: string;
         key: string;
     };
-    favoriteCities: any;
-    favoriteCitiesData: any;
+    favoriteCities: { [key: string]: { city: string; key: string } };
+    favoriteCitiesWeather: any;
     tempUnits: 'C' | 'F';
-    geoPosition: any;
 }
