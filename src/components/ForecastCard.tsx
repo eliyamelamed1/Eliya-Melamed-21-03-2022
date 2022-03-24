@@ -40,16 +40,16 @@ const ForecastCard: React.FC<{ item: ItemType }> = ({ item }) => {
     const { tempUnits } = useSelector((state: RootState) => state.weatherSlice);
 
     let minTemp = item.Temperature.Minimum.Value;
-    minTemp = unitTypeConverter({ temp: minTemp, unit: tempUnits });
-
     let maxTemp = item.Temperature.Maximum.Value;
-    maxTemp = unitTypeConverter({ temp: maxTemp, unit: tempUnits });
+
+    minTemp = Math.round(unitTypeConverter({ temp: minTemp, unit: tempUnits }));
+    maxTemp = Math.round(unitTypeConverter({ temp: maxTemp, unit: tempUnits }));
 
     return (
         <div className='forecast-card' key={day}>
             <h3> {day} </h3>
             <h3>
-                {Math.round(minTemp)}° - {Math.round(maxTemp)}°
+                {minTemp}° - {maxTemp}°
             </h3>
         </div>
     );
