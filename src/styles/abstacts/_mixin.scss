@@ -1,11 +1,9 @@
-@import './variables';
-
 @mixin button {
-    background-color: $primary-color;
+    background-color: var(--primary-color);
     padding: 1rem;
     border-radius: 0.5rem;
     font-weight: 600;
     &:hover {
-        color: black;
+        background-color: var(--hover-color);
     }
 }

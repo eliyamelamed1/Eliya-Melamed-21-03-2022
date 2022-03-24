@@ -51,7 +51,7 @@ const Forecast = () => {
     return (
         <div className='forecast'>
             <header>
-                <Button onClick={onClick} variant='contained'>
+                <Button onClick={onClick} variant='contained' className='unitButton'>
                     °{tempUnits}
                 </Button>
                 <CurrentCityWeather />

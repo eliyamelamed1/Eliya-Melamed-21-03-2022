@@ -65,7 +65,7 @@ export const currentConditionsAction = createAsyncThunk<
 
 export const geoPositionSearchAction = createAsyncThunk<{}, { dispatch: any }>(
     'geoPositionSearchAction',
-    async ({ dispatch }, { rejectWithValue }) => {
+    async ({ dispatch }) => {
         navigator.geolocation.getCurrentPosition(async function (position) {
             try {
                 const lat = position.coords.latitude;

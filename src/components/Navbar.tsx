@@ -6,6 +6,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
+import MaterialUISwitch from './ThemeSwitch';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,7 +18,7 @@ const pages = [
     { name: 'Favorites', route: '/Favorites' },
 ];
 
-const Navbar = () => {
+const Navbar: React.FC<any> = ({ toggle }) => {
     const location = useLocation();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
@@ -50,6 +51,7 @@ const Navbar = () => {
                     {page.name}
                 </Link>
             ))}
+            <MaterialUISwitch defaultChecked onClick={toggle} />
         </Box>
     );
     const mobileLinks = (
@@ -78,9 +80,6 @@ const Navbar = () => {
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
-                sx={{
-                    display: { xs: 'block', md: 'none' },
-                }}
             >
                 {pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
@@ -103,7 +102,7 @@ const Navbar = () => {
                         component='div'
                         sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                     >
-                        Weather
+                        <MaterialUISwitch defaultChecked onClick={toggle} />
                     </Typography>
                     {desktopLinks}
                 </Toolbar>
