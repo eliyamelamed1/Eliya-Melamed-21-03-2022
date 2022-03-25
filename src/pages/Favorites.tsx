@@ -36,6 +36,7 @@ const Favorites = () => {
     return (
         <div className='favorites'>
             {Object.keys(favoriteCitiesWeather)?.map((item) => {
+                // @ts-ignore
                 return <FavoriteCard item={favoriteCitiesWeather[item]} />;
             })}
         </div>

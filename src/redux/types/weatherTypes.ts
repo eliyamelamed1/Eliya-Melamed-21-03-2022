@@ -81,6 +81,12 @@ export interface CurrentConditionsType {
     Link: string;
 }
 
+export interface FavoriteCitiesWeatherType {
+    city: string;
+    key: number;
+    temperature: number;
+}
+
 export interface initialStateTypes {
     searchResults: SearchResultsType[];
     fiveDaysForecasts: FiveDaysForecasts | null;
@@ -90,6 +96,6 @@ export interface initialStateTypes {
         key: string;
     };
     favoriteCities: { [key: string]: { city: string; key: string } };
-    favoriteCitiesWeather: any;
+    favoriteCitiesWeather: FavoriteCitiesWeatherType[];
     tempUnits: 'C' | 'F';
 }

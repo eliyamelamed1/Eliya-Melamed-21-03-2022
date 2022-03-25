@@ -8,7 +8,7 @@ import { unitTypeConverter } from '../utils/unitTypeConverter';
 
 interface ItemType {
     city: string;
-    key: string;
+    key: number;
     temperature: number;
 }
 
