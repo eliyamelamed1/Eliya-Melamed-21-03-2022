@@ -11,21 +11,24 @@ const Favorites = () => {
     const [display, setDisplay] = useState(false);
     useEffect(() => {
         // function to update favoriteCities details on each refresh
-        Object.keys(favoriteCities)?.map(async (item: string) => {
-            try {
-                setDisplay(false);
-                const { key, city } = favoriteCities[item];
-                let res = await dispatch(currentConditionsAction({ locationKey: key }));
+        setDisplay(false);
 
-                // @ts-ignore
-                const temperature = res.payload?.data?.[0].Temperature.Metric.Value;
+        const fetchFavoriteCitiesWeather = async () => {
+            for (const item in favoriteCities) {
+                try {
+                    const { key, city } = favoriteCities[item];
+                    let res = await dispatch(currentConditionsAction({ locationKey: key }));
 
-                await dispatch(setFavoriteCitiesWeather({ city, key, temperature }));
-                setDisplay(true);
-            } catch (err) {
-                setDisplay(true);
+                    // @ts-ignore
+                    const temperature = res.payload?.data?.[0].Temperature.Metric.Value;
+
+                    await dispatch(setFavoriteCitiesWeather({ city, key, temperature }));
+                    setDisplay(true);
+                } catch (err) {}
             }
-        });
+        };
+        fetchFavoriteCitiesWeather();
+        setDisplay(true);
     }, [favoriteCities, dispatch]);
 
     if (!display) return <></>;
