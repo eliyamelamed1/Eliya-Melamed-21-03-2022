@@ -46,7 +46,7 @@ const Forecast = () => {
         fetchWeather();
     }, [dispatch, currentCityAndKey]);
 
-    if (!display) return <></>;
+    if (!display || !fiveDaysForecasts) return <></>;
 
     return (
         <div className='forecast'>
@@ -57,16 +57,16 @@ const Forecast = () => {
                 <CurrentCityWeather />
                 <FavoriteBtn />
             </header>
-            {fiveDaysForecasts && (
+            {
                 <>
-                    <h1>{fiveDaysForecasts.Headline.Text}</h1>
+                    <h1>{fiveDaysForecasts?.Headline.Text}</h1>
                     <section className='five-days-forecasts'>
-                        {fiveDaysForecasts.DailyForecasts.map((item) => {
+                        {fiveDaysForecasts?.DailyForecasts.map((item) => {
                             return <ForecastCard item={item as ItemType} />;
                         })}
                     </section>
                 </>
-            )}
+            }
         </div>
     );
 };
