@@ -3,7 +3,7 @@
 .forecast {
     margin-top: 2rem;
     padding-inline: 5%;
-    padding-block: 2%;
+    padding-block: 2rem;
     width: fit-content;
     display: flex;
     margin-inline: auto;
@@ -25,7 +25,7 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        gap: 5rem;
+        gap: 2rem;
     }
 
     header {
