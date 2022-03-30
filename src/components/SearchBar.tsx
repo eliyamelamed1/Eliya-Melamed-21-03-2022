@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
     autoCompleteSearchAction,
     currentConditionsAction,
@@ -22,10 +22,11 @@ const SearchBar = () => {
     const [loading, setLoading] = useState(false);
     const { searchResults } = useSelector((state: RootState) => state.weatherSlice);
 
-    const deb = useCallback(
-        debounce((e: any) => {
-            setCity(e.target.value);
-        }, 300),
+    const deb = useMemo(
+        () =>
+            debounce((e: any) => {
+                setCity(e.target.value);
+            }, 300),
         []
     );
 
