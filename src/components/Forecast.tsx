@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { currentConditionsAction, fiveDaysForecastsAction, setTempUnit } from '../redux/slices/weatherSlice';
+import { currentTempAction, fiveDaysForecastsAction, setTempUnit } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import FavoriteBtn from './FavoriteBtn';
@@ -10,18 +10,17 @@ import { unitTypeConverter } from '../utils/unitTypeConverter';
 
 const Forecast = () => {
     const dispatch = useDispatch();
-    const { fiveDaysForecasts, currentConditions, currentCityAndKey, tempUnits } = useSelector(
+    const { fiveDaysForecasts, currentTemp, currentCityAndKey, tempUnits } = useSelector(
         (state: RootState) => state.weatherSlice
     );
     const [display, setDisplay] = useState(false);
 
     const CurrentCityWeather = () => {
         if (!currentCityAndKey) return <></>;
-
         const { city } = currentCityAndKey;
-        let temperature = currentConditions?.Temperature.Metric.Value;
-        if (!temperature || !city) return <></>;
-        temperature = unitTypeConverter({ temp: temperature, unit: tempUnits });
+
+        if (!currentTemp || !city) return <></>;
+        const temperature = unitTypeConverter({ temp: currentTemp, unit: tempUnits });
         return (
             <section className='city-details'>
                 <h2>{city}</h2>
@@ -40,7 +39,7 @@ const Forecast = () => {
             if (currentCityAndKey.city === '' || currentCityAndKey.key === '') return;
             setDisplay(false);
             await dispatch(fiveDaysForecastsAction({ locationKey: currentCityAndKey.key }));
-            await dispatch(currentConditionsAction({ locationKey: currentCityAndKey.key }));
+            await dispatch(currentTempAction({ locationKey: currentCityAndKey.key }));
             setDisplay(true);
         };
         fetchWeather();

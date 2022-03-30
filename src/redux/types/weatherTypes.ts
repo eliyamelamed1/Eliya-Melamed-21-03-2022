@@ -57,29 +57,6 @@ export interface FiveDaysForecasts {
     };
     DailyForecasts: ItemType[];
 }
-export interface CurrentConditionsType {
-    LocalObservationDateTime: string;
-    EpochTime: number;
-    WeatherText: string;
-    WeatherIcon: number;
-    HasPrecipitation: boolean;
-    PrecipitationType: null;
-    IsDayTime: boolean;
-    Temperature: {
-        Metric: {
-            Value: number;
-            Unit: string;
-            UnitType: number;
-        };
-        Imperial: {
-            Value: number;
-            Unit: string;
-            UnitType: number;
-        };
-    };
-    MobileLink: string;
-    Link: string;
-}
 
 export interface FavoriteCitiesWeatherType {
     city: string;
@@ -90,7 +67,7 @@ export interface FavoriteCitiesWeatherType {
 export interface initialStateTypes {
     searchResults: SearchResultsType[];
     fiveDaysForecasts: FiveDaysForecasts | null;
-    currentConditions: CurrentConditionsType | null;
+    currentTemp: number | null;
     currentCityAndKey: {
         city: string;
         key: string;

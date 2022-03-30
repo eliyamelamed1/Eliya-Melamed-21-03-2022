@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
     autoCompleteSearchAction,
-    currentConditionsAction,
+    currentTempAction,
     fiveDaysForecastsAction,
     setCurrentCityAndKey,
 } from '../redux/slices/weatherSlice';
@@ -59,7 +59,7 @@ const SearchBar = () => {
                 })
             );
             dispatch(fiveDaysForecastsAction({ locationKey: key })) &&
-                dispatch(currentConditionsAction({ locationKey: key }));
+                dispatch(currentTempAction({ locationKey: key }));
             return setCity('');
         }
         return toast.error('Wrong city - please choose from one of the options ');

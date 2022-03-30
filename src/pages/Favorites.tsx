@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { currentConditionsAction, setFavoriteCitiesWeather } from '../redux/slices/weatherSlice';
+import React, { useCallback, useEffect, useState } from 'react';
+import { currentTempAction, setFavoriteCitiesWeather } from '../redux/slices/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import FavoriteCard from '../components/FavoriteCard';
@@ -9,27 +9,26 @@ const Favorites = () => {
     const { favoriteCities, favoriteCitiesWeather } = useSelector((state: RootState) => state.weatherSlice);
     const dispatch = useDispatch();
     const [display, setDisplay] = useState(false);
-    useEffect(() => {
-        // function to update favoriteCities details on each refresh
+
+    const fetchFavoriteCitiesWeather = useCallback(async () => {
         setDisplay(false);
+        for (const item in favoriteCities) {
+            try {
+                const { key, city } = favoriteCities[item];
+                let res = await dispatch(currentTempAction({ locationKey: key }));
 
-        const fetchFavoriteCitiesWeather = async () => {
-            for (const item in favoriteCities) {
-                try {
-                    const { key, city } = favoriteCities[item];
-                    let res = await dispatch(currentConditionsAction({ locationKey: key }));
+                // @ts-ignore
+                const temperature = res.payload.data?.[0].Temperature.Metric.Value;
 
-                    // @ts-ignore
-                    const temperature = res.payload?.data?.[0].Temperature.Metric.Value;
-
-                    await dispatch(setFavoriteCitiesWeather({ city, key, temperature }));
-                    setDisplay(true);
-                } catch (err) {}
-            }
-        };
-        fetchFavoriteCitiesWeather();
+                await dispatch(setFavoriteCitiesWeather({ city, key, temperature }));
+            } catch (err) {}
+        }
         setDisplay(true);
-    }, [favoriteCities, dispatch]);
+    }, [dispatch, favoriteCities]);
+
+    useEffect(() => {
+        fetchFavoriteCitiesWeather();
+    }, [fetchFavoriteCitiesWeather]);
 
     if (!display) return <></>;
 

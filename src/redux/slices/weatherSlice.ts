@@ -10,7 +10,7 @@ import { tryParseJSONObject } from '../../utils/jsonParse';
 const initialState: initialStateTypes = {
     searchResults: [],
     fiveDaysForecasts: null,
-    currentConditions: null,
+    currentTemp: null,
     currentCityAndKey: {
         city: '',
         key: '',
@@ -48,14 +48,14 @@ export const fiveDaysForecastsAction = createAsyncThunk<
     }
 });
 
-export const currentConditionsAction = createAsyncThunk<
+export const currentTempAction = createAsyncThunk<
     {},
     {
         locationKey: string;
     }
->('currentConditionsAction', async ({ locationKey }, { rejectWithValue }) => {
+>('currentTempAction', async ({ locationKey }, { rejectWithValue }) => {
     try {
-        let res = await axiosInstance.get(endpoints({ locationKey, apikey }).currentConditions);
+        let res = await axiosInstance.get(endpoints({ locationKey, apikey }).currentTemp);
         return res;
     } catch (err) {
         return rejectWithValue(err);
@@ -114,8 +114,8 @@ export const weatherSlice = createSlice({
         builder.addCase<any>(fiveDaysForecastsAction.fulfilled, (state, { payload }) => {
             state.fiveDaysForecasts = payload.data;
         });
-        builder.addCase<any>(currentConditionsAction.fulfilled, (state, { payload }) => {
-            state.currentConditions = payload.data[0];
+        builder.addCase<any>(currentTempAction.fulfilled, (state, { payload }) => {
+            state.currentTemp = +payload.data[0].Temperature.Metric.Value;
         });
     },
 });
