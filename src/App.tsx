@@ -19,7 +19,7 @@ function App() {
     };
 
     return (
-        <html data-theme={theme} className='html'>
+        <div data-theme={theme} className='appWrapper'>
             <LoaderContainer />
             <ToastContainer />
             <Router>
@@ -30,7 +30,7 @@ function App() {
                     <Route path='*' element={<Navigate to='/' />} />
                 </Routes>
             </Router>
-        </html>
+        </div>
     );
 }
 

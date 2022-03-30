@@ -26,18 +26,22 @@
     --text-primary: white;
 }
 
+.appWrapper {
+    background: var(--background);
+    background-position: var(--background-position);
+    box-shadow: var(--box-shadow);
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
 ul {
     list-style-type: none;
 }
 li {
     list-style-type: none;
 }
-body html {
-    background: var(--background);
-    background-position: var(--background-position);
-    box-shadow: var(--box-shadow);
-    min-height: 100vh;
 
+html {
     z-index: 1;
     font-size: 16px;
     color: inherit;
