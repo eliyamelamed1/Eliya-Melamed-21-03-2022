@@ -26,7 +26,7 @@ const SearchBar = () => {
         debounce((e: any) => {
             setCity(e.target.value);
         }, 300),
-        [city]
+        []
     );
 
     const onChange = (e: any) => {
