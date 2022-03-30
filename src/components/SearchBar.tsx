@@ -31,7 +31,6 @@ const SearchBar = () => {
 
     const onChange = (e: any) => {
         deb(e);
-        setCity(e.target.value);
     };
 
     useEffect(() => {
