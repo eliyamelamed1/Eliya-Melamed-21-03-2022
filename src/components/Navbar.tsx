@@ -18,7 +18,11 @@ const pages = [
     { name: 'Favorites', route: '/Favorites' },
 ];
 
-const Navbar: React.FC<any> = ({ toggle }) => {
+interface NavbarProps {
+    toggle: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ toggle }) => {
     const location = useLocation();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
